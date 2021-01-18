@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "iste-in-core",
-    "slug": "iste-in-core",
+    "name": "covid-track",
+    "slug": "covid-track",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -15,7 +15,9 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vaibhavchopra.covidtracker",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.vaibhavchopra.covidtracker",
@@ -26,7 +28,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     }
   }
 }
