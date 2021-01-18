@@ -1,15 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import {
-  Chart,
-  VerticalAxis,
-  HorizontalAxis,
-  Area,
-  Line,
-} from 'react-native-responsive-linechart'
+import { LineChart } from 'react-native-chart-kit'
+import { Dimensions } from 'react-native'
+const screenWidth = Dimensions.get('window').width
 import { colors } from './constants'
 import { shorthand } from './utilities'
-type category = 'confirmed' | 'active' | 'recovered' | 'deceased'
+export type category = 'confirmed' | 'active' | 'recovered' | 'deceased'
 
 const StatChart = ({
   category,
@@ -18,9 +14,16 @@ const StatChart = ({
   category: category
   history: any
 }) => {
-  //@ts-ignore
-  const data = history.map((elem) => elem[category]) || []
+  const data = history.map((elem) => elem[category])
+  //   console.log('========================================\n', data)
+  let reducedData = data
+  while (reducedData.length > 40) {
+    reducedData = reducedData.filter((_, i) => {
+      return i % 3 != 0
+    })
+  }
 
+  const labels = reducedData.map(() => '')
   return (
     <View
       style={{
@@ -58,6 +61,43 @@ const StatChart = ({
       >
         {shorthand(data[data.length - 1])}
       </Text>
+
+      {reducedData.length == labels.length && reducedData.length > 5 ? (
+        <LineChart
+          data={{
+            labels: labels,
+            datasets: [
+              {
+                data: reducedData,
+              },
+            ],
+          }}
+          renderDotContent={() => false}
+          width={
+            screenWidth / 2
+            //   200
+          } // from react-native
+          height={70}
+          style={{
+            marginLeft: -60,
+          }}
+          withInnerLines={false}
+          withOuterLines={false}
+          withVerticalLabels={false}
+          withHorizontalLabels={false}
+          // yAxisInterval={4} // optional, defaults to 1
+          chartConfig={{
+            backgroundGradientFromOpacity: 0,
+            backgroundGradientToOpacity: 0,
+            color: () => colors[category],
+            propsForDots: {
+              r: '0',
+              strokeWidth: '0',
+            },
+          }}
+          bezier
+        />
+      ) : null}
     </View>
   )
 }

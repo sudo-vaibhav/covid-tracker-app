@@ -16,18 +16,24 @@ import { shorthand } from './components/utilities'
 
 export default function App() {
   const [data, setData] = useState({
-    listItems: [],
-    historicData: [],
+    historicData: [0, 0, 0, 0],
+    listItems: [
+      {
+        active: 100,
+        confirmed: 100,
+        deceased: 100,
+        recovered: 100,
+        state: '',
+        key: 0,
+      },
+    ],
   })
   useEffect(() => {
     const getData = async () => {
-      const latestResp = await axios.get(
-        'https://api.rootnet.in/covid19-in/stats/latest',
-      )
-
-      const historyResp = await axios.get(
-        'https://api.rootnet.in/covid19-in/stats/history',
-      )
+      const [historyResp, latestResp] = await Promise.all([
+        axios.get('https://api.rootnet.in/covid19-in/stats/history'),
+        axios.get('https://api.rootnet.in/covid19-in/stats/latest'),
+      ])
 
       setData({
         historicData: historyResp.data.data.map(({ summary }) => {
@@ -65,6 +71,7 @@ export default function App() {
     getData()
   }, [])
 
+  console.log('heya', data)
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
