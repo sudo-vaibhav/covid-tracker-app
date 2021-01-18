@@ -15,15 +15,8 @@ const StatChart = ({
   history: any
 }) => {
   const data = history.map((elem) => elem[category])
-  //   console.log('========================================\n', data)
-  let reducedData = data
-  while (reducedData.length > 40) {
-    reducedData = reducedData.filter((_, i) => {
-      return i % 3 != 0
-    })
-  }
 
-  const labels = reducedData.map(() => '')
+  const labels = data.map(() => '')
   return (
     <View
       style={{
@@ -62,21 +55,18 @@ const StatChart = ({
         {shorthand(data[data.length - 1])}
       </Text>
 
-      {reducedData.length == labels.length && reducedData.length > 5 ? (
+      {data.length == labels.length && data.length > 5 ? (
         <LineChart
           data={{
             labels: labels,
             datasets: [
               {
-                data: reducedData,
+                data: data,
               },
             ],
           }}
           renderDotContent={() => false}
-          width={
-            screenWidth / 2
-            //   200
-          } // from react-native
+          width={screenWidth / 2}
           height={70}
           style={{
             marginLeft: -60,
@@ -85,7 +75,6 @@ const StatChart = ({
           withOuterLines={false}
           withVerticalLabels={false}
           withHorizontalLabels={false}
-          // yAxisInterval={4} // optional, defaults to 1
           chartConfig={{
             backgroundGradientFromOpacity: 0,
             backgroundGradientToOpacity: 0,

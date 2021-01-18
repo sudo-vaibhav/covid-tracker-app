@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar'
 import React, { useState, useEffect } from 'react'
 import {
   FlatList,
@@ -9,7 +8,7 @@ import {
   StyleSheet,
 } from 'react-native'
 import StatChart from './components/StatChart'
-import TableRow, { tableRowstyles, IListItem } from './components/TableRow'
+import TableRow, { tableRowstyles } from './components/TableRow'
 import { colors } from './components/constants'
 import axios from 'axios'
 import { shorthand } from './components/utilities'
@@ -27,6 +26,7 @@ export default function App() {
         key: 0,
       },
     ],
+    loading: true,
   })
   useEffect(() => {
     const getData = async () => {
@@ -66,60 +66,63 @@ export default function App() {
             key: idx,
           }
         }),
+        loading: false,
       })
     }
     getData()
   }, [])
 
-  console.log('heya', data)
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <ImageBackground
-          source={require('./assets/virus.jpg')}
-          style={{ width: '100%', height: '100%', flex: 1 }}
-        />
-        <View style={{ flex: 3, marginTop: -100, display: 'flex' }}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-around',
-            }}
-          >
-            <StatChart category={'confirmed'} history={data.historicData} />
-            <StatChart category={'active'} history={data.historicData} />
-            <StatChart category={'recovered'} history={data.historicData} />
-            <StatChart category={'deceased'} history={data.historicData} />
-          </View>
-          <View
-            style={{
-              margin: 19,
-            }}
-          >
-            <View style={tableRowstyles.view}>
-              <Text style={tableRowstyles.state}>State / UT </Text>
-              {['confirmed', 'active', 'recovered', 'deceased'].map((e) => {
-                return (
-                  <Text
-                    key={e}
-                    style={{ ...tableRowstyles.numbers, color: colors[e] }}
-                  >
-                    {e[0]}
-                  </Text>
-                )
-              })}
-            </View>
-            <FlatList
-              data={data.listItems}
-              renderItem={TableRow}
-              contentContainerStyle={{ paddingBottom: 400 }}
-              keyExtractor={(item) => item.key.toString()}
+        {data.loading ? null : (
+          <>
+            <ImageBackground
+              source={require('./assets/virus.jpg')}
+              style={{ width: '100%', height: '100%', flex: 1 }}
             />
-          </View>
-        </View>
-        <StatusBar />
+            <View style={{ flex: 3, marginTop: -100, display: 'flex' }}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-around',
+                }}
+              >
+                <StatChart category={'confirmed'} history={data.historicData} />
+                <StatChart category={'active'} history={data.historicData} />
+                <StatChart category={'recovered'} history={data.historicData} />
+                <StatChart category={'deceased'} history={data.historicData} />
+              </View>
+              <View
+                style={{
+                  margin: 19,
+                }}
+              >
+                <View style={tableRowstyles.view}>
+                  <Text style={tableRowstyles.state}>State / UT </Text>
+                  {['confirmed', 'active', 'recovered', 'deceased'].map((e) => {
+                    return (
+                      <Text
+                        key={e}
+                        style={{ ...tableRowstyles.numbers, color: colors[e] }}
+                      >
+                        {e[0]}
+                      </Text>
+                    )
+                  })}
+                </View>
+                <FlatList
+                  data={data.listItems}
+                  renderItem={TableRow}
+                  contentContainerStyle={{ paddingBottom: 400 }}
+                  keyExtractor={(item) => item.key.toString()}
+                />
+              </View>
+            </View>
+          </>
+        )}
       </View>
     </SafeAreaView>
   )
