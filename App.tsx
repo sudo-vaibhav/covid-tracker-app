@@ -81,7 +81,13 @@ export default function App() {
               source={require('./assets/virus.jpg')}
               style={{ width: '100%', height: '100%', flex: 1 }}
             />
-            <View style={{ flex: 3, marginTop: -100, display: 'flex' }}>
+            <View
+              style={{
+                flex: 3,
+                marginTop: -100,
+                display: 'flex',
+              }}
+            >
               <View
                 style={{
                   display: 'flex',

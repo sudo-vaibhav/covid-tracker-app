@@ -1,8 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { LineChart } from 'react-native-chart-kit'
-import { Dimensions } from 'react-native'
-const screenWidth = Dimensions.get('window').width
+import { LineChart } from 'react-native-svg-charts'
 import { colors } from './constants'
 import { shorthand } from './utilities'
 export type category = 'confirmed' | 'active' | 'recovered' | 'deceased'
@@ -15,8 +13,6 @@ const StatChart = ({
   history: any
 }) => {
   const data = history.map((elem) => elem[category])
-
-  const labels = data.map(() => '')
   return (
     <View
       style={{
@@ -54,39 +50,14 @@ const StatChart = ({
       >
         {shorthand(data[data.length - 1])}
       </Text>
-
-      {data.length == labels.length && data.length > 5 ? (
-        <LineChart
-          data={{
-            labels: labels,
-            datasets: [
-              {
-                data: data,
-              },
-            ],
-          }}
-          renderDotContent={() => false}
-          width={screenWidth / 2}
-          height={70}
-          style={{
-            marginLeft: -60,
-          }}
-          withInnerLines={false}
-          withOuterLines={false}
-          withVerticalLabels={false}
-          withHorizontalLabels={false}
-          chartConfig={{
-            backgroundGradientFromOpacity: 0,
-            backgroundGradientToOpacity: 0,
-            color: () => colors[category],
-            propsForDots: {
-              r: '0',
-              strokeWidth: '0',
-            },
-          }}
-          bezier
-        />
-      ) : null}
+      <LineChart
+        style={{
+          height: 70,
+        }}
+        data={data}
+        animate
+        svg={{ stroke: colors[category], strokeWidth: 2.5 }}
+      ></LineChart>
     </View>
   )
 }
