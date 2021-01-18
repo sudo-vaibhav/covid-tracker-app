@@ -58,31 +58,6 @@ const StatChart = ({
       >
         {shorthand(data[data.length - 1])}
       </Text>
-      <Chart
-        style={{
-          height: 70,
-          //   width: 400
-        }}
-        data={data.map((d, i) => ({ x: i, y: d }))}
-        // padding={{ left: 40, bottom: 20, right: 20, top: 20 }}
-        // xDomain={{ min: -2, max: 10 }}
-        // yDomain={{ min: -4, max: 20 }}
-      >
-        {/* <VerticalAxis
-          //   tickCount={10}
-          theme={{ labels: { formatter: (v) => v.toFixed(2) } }}
-        /> */}
-        {/* <HorizontalAxis tickCount={3} /> */}
-        {/* <Area
-          theme={{
-            gradient: {
-              from: { color: '#44bd32' },
-              to: { color: '#44bd32', opacity: 0.2 },
-            },
-          }}
-        /> */}
-        <Line theme={{ stroke: { color: '#44bd32', width: 5 } }} />
-      </Chart>
     </View>
   )
 }
