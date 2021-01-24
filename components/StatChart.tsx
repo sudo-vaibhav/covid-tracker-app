@@ -1,9 +1,8 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { LineChart } from 'react-native-svg-charts'
-import { colors } from './constants'
+import { colors, category } from './constants'
 import { shorthand } from './utilities'
-export type category = 'confirmed' | 'active' | 'recovered' | 'deceased'
 
 const StatChart = ({
   category,
@@ -16,10 +15,9 @@ const StatChart = ({
   return (
     <View
       style={{
-        flexBasis: '50%',
         padding: 16,
         maxWidth: '40%',
-        marginTop: 15,
+        marginBottom: 15,
         backgroundColor: 'white',
         borderRadius: 15,
         shadowColor: '#000',
@@ -55,7 +53,6 @@ const StatChart = ({
           height: 70,
         }}
         data={data}
-        animate
         svg={{ stroke: colors[category], strokeWidth: 2.5 }}
       ></LineChart>
     </View>
