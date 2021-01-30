@@ -8,7 +8,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@pqt/abbreviate": "^1.0.2",
     "@types/react-native-svg-charts": "^5.0.6",
     "axios": "^0.21.1",
     "expo": "~40.0.0",
